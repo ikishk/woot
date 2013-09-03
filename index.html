@@ -1,0 +1,1445 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>kishk.org - </title>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="generator" content="vi" />
+    <meta content="" name="description" />
+    <meta content="" name="DC.description" />
+    <meta content="ikishk" name="DC.creator" />
+    <meta content="2005-10-27 14:18:54" name="DC.date.created" />
+
+    <meta content="2005-10-27 19:08:01" name="DC.date.modified" />
+    <meta content="Document" name="DC.type" />
+    <meta content="text/plain" name="DC.format" />
+
+    <!-- thank you plone.org -->
+    <link rel="Stylesheet" type="text/css" media="screen" href="/css/plone.css" />
+
+    <!-- Alternate style sheets for the bigger/smaller text switcher -->
+    <link rel="alternate stylesheet" type="text/css"
+          media="screen" href="/css/ploneTextSmall.css" title="Small Text" />
+
+    <link rel="alternate stylesheet" type="text/css"
+          media="screen" href="/css/ploneTextLarge.css" title="Large Text" />
+
+    <link rel="shortcut icon" href="http://www.kishk.org/css/kfavicon.ico"
+          type="image/x-icon" />
+
+    <link rel="copyright" href="copyright" title="Copyright information" />
+    <link rel="author" href="author" title="Author information" />
+    <link rel="alternate" type="application/rss+xml" href="http://www.kishk.org/news.xml" title="kishk.org news RSS feed" />
+
+    <!-- Disable IE6 image toolbar -->
+    <meta http-equiv="imagetoolbar" content="no" />
+
+    <script type="text/javascript"
+            src="http://woot.kishk.org:8080/css/plone_javascripts.js"></script>
+
+    <script type="text/javascript"
+            src="http://woot.kishk.org:8080/css/hide.js"></script>
+
+
+<!-- woot code starts here -->
+<script language="javascript" src="/js/prototype-1.6.0.3.js"></script>
+<script language="javascript" src="/js/scriptaculous.js"></script>
+
+<script language="javascript" src="/audio/soundmanager.js"></script>
+<script language="javascript" src="/js/woot.js"></script>
+
+<script language="javascript">
+
+function texttoggle(info){
+  if (info.style.display=='none'){
+    info.style.display='';
+  }else{
+    info.style.display='none'
+  }
+}
+
+function textexpand(info){
+  if (info.style.display=='none'){
+    info.style.display='';
+  }
+}
+
+function texthide(info){
+    info.style.display='none'
+}
+
+
+
+//show the object with blink effect
+function donatefade() {
+$("donate").fade({ scope: 'fadeovers', duration: 7.0, from: 1, to: 0.3, delay: 5, position: 'front' });
+$("donate").appear({ scope: 'fadeovers', duration: 5.0, from: 0.3, to: 1, delay: 15, position: 'end' });
+}
+
+// drag/drop
+sections = ['group_1','group_2','group_3','group_4','group_5','group_6','group_7','group_8','group_9','group_1'];
+
+function createNewSection(name) {
+		var name = $F('sectionName');
+		if (name != '') {
+			var newDiv = Builder.node('div', {id: 'group' + (sections.length + 1), className: 'section', style: 'display:none;' }, [
+				Builder.node('h3', {className: 'handle'}, name)
+			]);
+
+			sections.push(newDiv.id);
+			$('page').appendChild(newDiv);
+			Effect.Appear(newDiv.id);
+			destroyLineItemSortables();
+			createLineItemSortables();
+			createGroupSortable();
+		}
+	}
+
+	function createLineItemSortables() {
+		for(var i = 0; i < sections.length; i++) {
+			Sortable.create(sections[i],{tag:'div',dropOnEmpty: true, containment: sections,only:'lineitem'});
+		}
+	}
+
+	function destroyLineItemSortables() {
+		for(var i = 0; i < sections.length; i++) {
+			Sortable.destroy(sections[i]);
+		}
+	}
+
+	function createGroupSortable() {
+		Sortable.create('page',{tag:'div',only:'section',handle:'handle'});
+	}
+
+
+</script>
+  <style>
+    #percentComplete,
+    #percent,
+    #photoLink,
+    #price,
+    #productName,
+    #condition {
+        position: left;
+        text-align: center;
+        width: 200px;
+        margin-left: 10px;
+    }
+
+    #photoLink {
+        text-align: center;
+        width: 200px;
+        height: 200px;
+    }
+    #progressBlock {
+        width: 600px;
+        height: 20px;
+        margin-left: 300px;
+        text-align: center;
+    }
+    #kidsprogressbar,
+    #selloutprogressbar,
+    #homeprogressbar,
+    #shirtprogressbar,
+    #sportprogressbar,
+    #techprogressbar,
+    #toolsprogressbar,
+    #wineprogressbar,
+    #accessoriesprogressbar,
+    #wootprogressbar {
+        position:absolute;
+        border: 1px solid #000000;
+        background: white;
+        width: 600px;
+        height: 5px;
+        left: 4px;
+        top: 26px;
+    }
+    #kidsprogressMeterBarDone,
+    #selloutprogressMeterBarDone,
+    #homeprogressMeterBarDone,
+    #shirtprogressMeterBarDone,
+    #sportprogressMeterBarDone,
+    #techprogressMeterBarDone,
+    #toolsprogressMeterBarDone,
+    #wineprogressMeterBarDone,
+    #accessoriesMeterBarDone,
+    #wootprogressMeterBarDone {
+        position:absolute;
+        background:orange;
+            height: 5px;
+            width: 0%;
+        left: 0px;
+    }
+    .donate{
+        border:1px solid #CCCCCC;
+        padding: 5px;
+        background-color:#F4F4F8;
+        text-align:center;
+        width: 600px;
+    }
+
+	div.section,div#createNew {
+		border: 1px solid #CCCCCC;
+		//margin: 30px 5px;
+		padding: 0px 0px 0px 0px;
+		background-color: #FFFFFF;
+	}
+
+	div#createNew input { margin-left: 5px; }
+
+	div#createNew h3, div.section h3 {
+		//font-size: 14px;
+		padding: 0px 5px;
+		margin: 0 0 10px 0;
+		background-color: #CCCCCC;
+		display: block;
+	}
+
+	div.section h3 {
+		cursor: move;
+    text-align: center;
+    width: 600px;
+	}
+
+#page {
+width: 612px;
+}
+
+	div.lineitem,span.lineitem {
+		//margin: 30px 10px 50px 100px;
+		//padding: 2px;
+		background-color: #FFFFFF;
+		cursor: move;
+	}
+
+//sprites;
+#wootimg {}
+#wootimg {width:65px;height:20px;background-position:-171px 0px;background-repeat:no-repeat;}
+#kidsimg {width:58px;height:20px;background-position:-171px -65px;background-repeat:no-repeat;}
+#selloutimg {width:77px;height:20px;background-position:-171px -107px;background-repeat:no-repeat;}
+#homeimg {width:67px;height:20px;background-position:-171px -41px;background-repeat:no-repeat;}
+#shirtimg {width:62px;height:20px;background-position:-171px -130px;background-repeat:no-repeat;}
+#sportimg {width:62px;height:20px;background-position:-171px -174px;background-repeat:no-repeat;}
+#techimg {width:60px;height:20px;background-position:-171px -195px;background-repeat:no-repeat;}
+#toolsimg {width:60px;height:20px;background-position:-174px -241px;background-repeat:no-repeat;}
+#wineimg {width:61px;height:20px;background-position:-171px -152px;background-repeat:no-repeat;}
+#accessoriesimg {width:88px;height:26px;background-position:-174px -263px;background-repeat:no-repeat;}
+
+#dealsimg {width:60px;height:20px;background-position:-171px -18px;background-repeat:no-repeat;}
+#localimg {width:68px;height:20px;background-position:-171px -87px;background-repeat:no-repeat;}
+
+#wootlimg {width:94px;height:25px;background-position:-481px -0px;background-repeat:no-repeat;}
+#kidslimg {width:133px;height:28px;background-position:-481px -74px;background-repeat:no-repeat;}
+#selloutlimg {width:160px;height:28px;background-position:-481px -127px;background-repeat:no-repeat;}
+#homelimg {width:153px;height:24px;background-position:-481px -50px;background-repeat:no-repeat;}
+#shirtlimg {width:139px;height:25px;background-position:-481px -155px;background-repeat:no-repeat;}
+#sportlimg {width:148px;height:27px;background-position:-481px -207px;background-repeat:no-repeat;}
+#techlimg {width:136px;height:26px;background-position:-481px -234px;background-repeat:no-repeat;}
+#toolslimg {width:166px;height:26px;background-position:-481px -286px;background-repeat:no-repeat;}
+#accessorieslimg {width:235px;height:29px;background-position:-481px -341px;background-repeat:no-repeat;}
+
+#wootoffimg {width:54px;height:49px;background-position:-728px -48px;background-repeat:no-repeat;}
+#soldoutimg {width:90px;height:87px;background-position:-641px -160px;background-repeat:no-repeat;}
+#closeimg {width:28px;height:28px;background-position:-640px -0px;background-repeat:no-repeat;}
+
+#wootimg, #dealsimg, #homeimg, #kidsimg, #localimg, #selloutimg, #shirtimg, 
+#wineimg, #sportimg, #techimg, #toolsimg, #wootlimg, #kidslimg, #selloutlimg, 
+#homelimg, #shirtlimg, #sportlimg, #techlimg, #wootoffimg, #soldoutimg, 
+#closeimg, #accessoriesimg, #accessorieslimg,
+#toolslimg {background-image:url(sprite.20.png); float: left; z-index: 1;}
+
+.donate2{
+	float:left;
+	position:relative;
+	right:300px;
+}
+.donatetop .donatebottom{
+	float:left;
+	width:600px;
+	position:relative;
+	left:0px;
+	overflow:hidden;
+}
+
+.donateleftcol .donaterightcol{
+	float:left;
+	width:300px;
+	position:relative;
+	left:300px;
+	overflow:hidden;
+}
+
+.mainblock, .donate{
+	width:600px;
+	position:relative;
+	border:0px;
+	overflow:hidden;
+}
+.centerblock{
+	float:left;
+	position:relative;
+	right:300px;
+}
+.topblock, .bottomblock {
+	float:left;
+	width:600px;
+	position:relative;
+	left:0px;
+	overflow:hidden;
+}
+
+.leftblock, .rightblock{
+	float:left;
+	width:300px;
+	position:relative;
+	left:300px;
+	overflow:hidden;
+}
+.leftblockmini, .rightblockmini{
+	float:left;
+	width:80px;
+	position:relative;
+	left:302px;
+	overflow:hidden;
+  border: 1px solid #8cacbb;
+  padding: 3px;
+}
+
+.refresh {
+ border: 1px solid #8cacbb;
+ padding: 2px 2px 2px 2px;
+ border-collapse: collapse;
+}
+
+.teaser{
+  position: relative;
+  margin: 0px 0px 5px 2px;
+  passing: 0px 0px 5px 2px;
+}
+.headline12{
+  font-family: 'Arial Black';
+  font-size: 12;
+}
+.headline14{
+  font-family: 'Arial Black';
+  font-size: 14;
+}
+.headline16{
+  font-family: 'Arial Black';
+  font-size: 16;
+  align: right;
+  text-align: right;
+}
+.headline18{
+  font-family: 'Arial Black';
+  font-size: 18;
+}
+.headline22{
+  font-family: 'Arial Black';
+  font-size: 22;
+}
+
+  </style>
+
+</head>
+  <body onload="getWOOT(); initializeAudioScheme(); donatefade();" onerror="getWOOT(); class="section-index_html">
+<!-- woot code ends here -->
+    <div id="visual-portal-wrapper">
+      <div id="portal-top">
+         <ul id="portal-siteactions" style="float: right;">
+           <li id="siteaction-small_text"><a
+            href="javascript:setActiveStyleSheet('Small Text', 1);"
+            title="Small Text">Small Text</a></li>
+           <li id="siteaction-normal_text"><a
+            href="javascript:setActiveStyleSheet('', 1);"
+            title="Normal Text">Normal Text</a></li>
+
+           <li id="siteaction-large_text"><a
+            href="javascript:setActiveStyleSheet('Large Text', 1);"
+            title="Large Text">Large Text</a></li>
+           <br>
+
+<!-- SiteSearch Google -->
+<div class="mainblock" style="z-index:1">
+<form method="get" action="http://www.google.com/custom" target="google_window">
+  <img src="http://www.google.com/logos/Logo_25wht.gif" alt="Google" align="middle">&nbsp;
+  <input type="radio" name="sitesearch" value="" checked="checked"></input>Web&nbsp;
+  <input type="radio" name="sitesearch" value="www.kishk.org"></input>kishk.org
+<br>
+  <input type="text" name="q" size="35" maxlength="255" value=""></input>
+  <input type="hidden" name="domains" value="www.kishk.org"></input>
+<!input type="submit" name="sa" value="Search"></input>
+<input type="hidden" name="client" value="pub-4559510749632785"></input>
+<input type="hidden" name="forid" value="1"></input>
+<input type="hidden" name="ie" value="ISO-8859-1"></input>
+<input type="hidden" name="oe" value="ISO-8859-1"></input>
+<input type="hidden" name="channel" value="3756738337"></input>
+<input type="hidden" name="cof" value="GALT:#008000;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:FFFFFF;ALC:0000FF;LC:0000FF;T:000000;GFNT:0000FF;GIMP:0000FF;LH:50;LW:341;L:http://www.kishk.org/css/logo2.gif;S:http://www.kishk.org;FORID:1"></input>
+<input type="hidden" name="hl" value="en"></input>
+</form>
+</div>
+<!-- SiteSearch Google -->
+         </ul>
+
+
+           <h1 id="portal-logo">
+
+    <a href="http://www.kishk.org">kishk.org</a>
+</h1>
+
+           <div id="portal-skinswitcher">
+</div>
+
+           
+    <h5 class="hiddenStructure">Sections</h5>
+
+    <ul id="portal-globalnav">
+
+        
+        <li id="preportaltab-index_html" class="plain">
+
+            <a href="http://www.kishk.org"
+               accesskey="h">Home</a>
+        </li>
+
+        <li id="portaltab-resume" class="plain">
+            <a href="http://www.kishk.org/resume.php">Resume</a>
+        </li>
+
+        <li id="preportaltab-picts" class="plain">
+            <a href="http://www.kishk.org/picts3.cgi"
+               accesskey="p">Picts/Video</a>
+        </li>
+
+       
+        <li id="preportaltab-internet" class="selected">
+            <a href="http://woot.kishk.org:8080"
+               accesskey="i">woot!</a>
+        </li>
+
+        <li id="preportaltab-weather" class="plain">
+
+            <a href="http://www.kishk.org/weather/"
+               accesskey="w">weather</a>
+        </li>
+
+        <li id="preportaltab-dvd" class="plain">
+            <a href="http://www.kishk.org/dvd.php"
+               accesskey="d">DVD</a>
+        </li>
+
+        <li id="preportaltab-feeds" class="plain">
+            <a href="http://www.kishk.org/feeds.php"
+               accesskey="f">RSS Feeds</a>
+
+        </li>
+
+    </ul>
+
+
+           
+
+<ul id="portal-personaltools">
+<li>&nbsp;</li>
+</ul>
+
+<div id="portal-breadcrumbs">
+
+&nbsp;
+</div>
+      </div>
+
+
+        
+                &nbsp;
+              </div>
+            </td>
+            <!-- end of the left (by default at least) column -->
+
+            <!-- start of main content block -->
+            <td id="portal-column-content">
+
+              
+                <div id="content">
+
+                  
+
+                  <div class="documentContent" id="region-content">
+
+                    <a name="documentContent"></a>
+
+                    
+
+                    
+    
+        <div class="documentActions">
+
+    <ul>
+    </ul>
+</div>
+
+<div class="section" style="position: absolute; left: 640; width: 180px" id="cjbanners">
+<!div class="cjbanners" style="position: absolute; left: 640;" id="cjbanners">
+  <h3 class="handle" style="width: 170px; cursor: default;">Referral Links</h3>
+
+<div style="text-align: center">
+<a href="http://www.anrdoezrs.net/click-4862377-10842476" target="_top"><img id="wootlimg" src="pixel.png" height=30px width=170px></a>
+<img src="http://www.lduhtrp.net/image-4862377-10842476" width="1" height="1" border="0"/>
+<br>
+<a href="http://www.dpbolvw.net/click-4862377-10842480" target="_top"><img id="kidslimg" src="pixel.png" height=30px width=170px></a>
+<img src="http://www.ftjcfx.com/image-4862377-10842480" width="1" height="1" border="0"/>
+<br>
+<a href="http://www.kqzyfj.com/click-4862377-10842483" target="_top"><img id="selloutlimg" src="pixel.png" height=30px width=170px></a>
+<img src="http://www.lduhtrp.net/image-4862377-10836843" width="1" height="1" border="0"/>
+<br>
+<a href="http://www.anrdoezrs.net/click-4862377-10845631" target="_top"><img id="shirtlimg" src="pixel.png" height=30px width=170px></a>
+<img src="http://www.awltovhc.com/image-4862377-10845631" width="1" height="1" border="0"/>
+<br>
+<a href="http://www.anrdoezrs.net/click-4862377-10956019" target="_top"><img id="homelimg" src="pixel.png" height=30px width=170px></a>
+<img src="http://www.ftjcfx.com/image-4862377-10956019" width="1" height="1" border="0"/>
+<br>
+<a href="http://www.jdoqocy.com/click-4862377-11082799" target="_top"><img id="sportlimg" src="pixel.png" height="30px" width="170px"></a>
+<img src="http://www.awltovhc.com/image-4862377-11082799" width="1" height="1" border="0"/>
+<br>
+<a href="http://www.jdoqocy.com/click-4862377-11105027" target="_top"><img id="techlimg" src="pixel.png" height="30px" width="170px"></a>
+<img src="http://www.tqlkg.com/image-4862377-11105027" width="1" height="1" border="0"/>
+<br>
+<a href="http://www.kqzyfj.com/click-4862377-11340265" target="_top"><img id="toolslimg" src="pixel.png" height="30px" width="170px"></a>
+<img src="http://www.ftjcfx.com/image-4862377-11340265" width="1" height="1" border="0"/>
+<br>
+<!-- amazon -->
+<a href="http://www.amazon.com/?tag=kishkorg-20"><img src=/amazon.gif border=0></a><br>
+<a target="_blank" href="http://www.amazon.com/gp/video/primesignup/ref=as_acph_pr_piv_71_on?ie=UTF8&camp=1789&creative=9325&linkCode=ur2&tag=kishkorg-20"><img src=/amazon-prime2.jpg></a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=kishkorg-20&l=ur2&o=1" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /><br>
+<a href="http://www.kqzyfj.com/click-4862377-11459757" target="_top"><img src=/mwave.gif border=0></a>
+<img src="http://www.lduhtrp.net/image-4862377-11459757" width="1" height="1" border="0"/>
+<br>
+<a href="http://www.kqzyfj.com/click-4862377-10855620" target="_top"><img src=/123print.jpg></a>
+<img src="http://www.lduhtrp.net/image-4862377-10855620" width="1" height="1" border="0"/>
+<br>
+<a href="http://www.dpbolvw.net/click-4862377-11025754" target="_top"><img src=/cameta.jpg></a>
+<img src="http://www.tqlkg.com/image-4862377-11025754" width="1" height="1" border="0"/>
+<br>
+<a href="http://www.anrdoezrs.net/click-4862377-8828975" target="_top"><img src=/lids.gif></a>
+<img src="http://www.awltovhc.com/image-4862377-8828975" width="1" height="1" border="0"/>
+<br>
+<a href="http://www.dpbolvw.net/click-4862377-10898369" target="_top"><img src=/myotcstore.jpg></a>
+<img src="http://www.lduhtrp.net/image-4862377-10898369" width="1" height="1" border="0"/>
+<br>
+<a href="http://www.kqzyfj.com/click-4862377-10646582" target="_top"><img src=/6dollarshirts.jpg></a>
+<img src="http://www.tqlkg.com/image-4862377-10646582" width="1" height="1" border="0"/>
+<br>
+<a href="http://www.tkqlhce.com/click-4862377-10523876" target="_top"><img src=/logo-godaddy.jpg></a>
+<img src="http://www.ftjcfx.com/image-4862377-10523876" width="1" height="1" border="0"/>
+<br>
+<!-- amazon -->
+<iframe src="http://rcm.amazon.com/e/cm?t=kishkorg-20&o=1&p=20&l=qs1&f=ifr" width="120" height="90" frameborder="0" scrolling="no"></iframe>
+<br><br>
+<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab" id="Player_ce350e6f-83c0-4996-87f5-9ecef848e4bd"  WIDTH="120px" HEIGHT="400px"> <PARAM NAME="movie" VALUE="http://ws.amazon.com/widgets/q?ServiceVersion=20070822&MarketPlace=US&ID=V20070822%2FUS%2Fkishkorg-20%2F8009%2Fce350e6f-83c0-4996-87f5-9ecef848e4bd&Operation=GetDisplayTemplate"><PARAM NAME="quality" VALUE="high"><PARAM NAME="bgcolor" VALUE="#FFFFFF"><PARAM NAME="allowscriptaccess" VALUE="always"><embed src="http://ws.amazon.com/widgets/q?ServiceVersion=20070822&MarketPlace=US&ID=V20070822%2FUS%2Fkishkorg-20%2F8009%2Fce350e6f-83c0-4996-87f5-9ecef848e4bd&Operation=GetDisplayTemplate" id="Player_ce350e6f-83c0-4996-87f5-9ecef848e4bd" quality="high" bgcolor="#ffffff" name="Player_ce350e6f-83c0-4996-87f5-9ecef848e4bd" allowscriptaccess="always"  type="application/x-shockwave-flash" align="middle" height="400px" width="120px"></embed></OBJECT> <NOSCRIPT><A HREF="http://ws.amazon.com/widgets/q?ServiceVersion=20070822&MarketPlace=US&ID=V20070822%2FUS%2Fkishkorg-20%2F8009%2Fce350e6f-83c0-4996-87f5-9ecef848e4bd&Operation=NoScript">Amazon.com Widgets</A></NOSCRIPT>
+<br><br>
+</div>
+</div>
+
+<div class="section" style="position: absolute; left: 820; width: 180px" id="cjbanners">
+  <h3 class="handle" style="width: 170px; cursor: default;">Donate Links</h3>
+<div style="text-align: center">
+<!-- paypal -->
+Bank acct/echeck/paypal:<br>
+<form name="_xclick" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_xclick">
+<input type="hidden" name="business" value="ikishk@gmail.com">
+<input type="hidden" name="item_name" value="I love your site. Keep woot.kishk.org alive. (no credit cards, please)">
+<input type="hidden" name="currency_code" value="USD">
+<!input type="hidden" name="amount" value="25.00">
+<input type="image" style="border: 0;" src="/btn_donate_LG.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" title="bank/echeck/paypal">
+</form>
+<br>
+Credit Cards:<br>
+<form name="_xclick" action="https://www.paypal.com/cgi-bin/webscr" method="post
+">
+<input type="hidden" name="cmd" value="_xclick">
+<input type="hidden" name="business" value="donatecc@kishk.org">
+<input type="hidden" name="item_name" value="I love your site. Keep woot.kishk.org alive. (credit card only link)">
+<input type="hidden" name="currency_code" value="USD">
+<!input type="hidden" name="amount" value="25.00">
+<input type="image" style="border: 0;" src="btn_donateCC_LG.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" title="Credit cards">
+</form>
+<br>
+Please don't forget to select "personal" then "gift"<br><br>
+<!-- end paypal -->
+<!/script>
+</div>
+
+<!-- audio -->
+  <h3 class="handle" style="width: 170px; cursor: default;">Audio cues</h3>
+<input name="enableAudioCues" type="checkbox" id="enableAudioCues" value="checkbox" checked="checked"
+  onClick="if (this.checked) audioCuesEnabled();" />
+  <label for="enableAudioCues">Enable</label>
+
+<label for="select"></label>
+  <select name="AudioScheme" id="AudioScheme"></select><br>
+
+  <input name="CueAt20PercentPlayed" type="hidden" id="CueAt20PercentPlayed" value="" />
+  <input name="CueAt20Percent" type="checkbox" id="CueAt20Percent" value="checkbox" />
+<label for="CueAt20Percent"><span class="testButton"><a href="#" onClick="testSound(1); return false;">20%</a></span></label>
+  <input name="CueAt10PercentPlayed" type="hidden" id="CueAt10PercentPlayed" value="" />
+  <input name="CueAt10Percent" type="checkbox" id="CueAt10Percent" value="checkbox" />
+<label for="CueAt10Percent"><span class="testButton"><a href="#" onClick="testSound(2); return false;">10%</a></span></label>
+  <input name="CueAt5PercentPlayed" type="hidden" id="CueAt5PercentPlayed" value="" />
+  <input name="CueAt5Percent" type="checkbox" id="CueAt5Percent" value="checkbox" />
+<label for="CueAt5Percent"><span class="testButton"><a href="#" onClick="testSound(3); return false;">5%</a></span></label><br>
+  <input name="CueAtSOPercentPlayed" type="hidden" id="CueAtSOPercentPlayed" value="" />
+  <input name="CueAtSOPercent" type="checkbox" id="CueAtSOPercent" value="checkbox" />
+<label for="CueAtSOPercent"><span class="testButton"><a href="#" onClick="testSound(5); return false;">Sold out</a></span></label>
+
+  <!input name="itemnew" type="hidden" id="itemnew" value="" />
+  <input name="CueAtNewPlayed" type="hidden" id="CueAtNewPlayed" value="" />
+  <input name="CueAtNewWoot" type="checkbox" id="CueAtNewWoot" value="checkbox" />
+<label for="CueAtNewWoot"><span class="testButton"><a href="#" onClick="testSound(4); return false;">new woot</a></span></label>
+<br>
+
+<!-- /audio -->
+
+  <h3 class="handle" style="width: 170px; cursor: default;">Email alerts<span id="linkcopy2" onClick="texttoggle(emailblock);" style="cursor: pointer; margin-left: 5px"><img src=up-down.gif style="float: right;"></span></h3>
+<div style="text-align: center; display: none;" id="emailblock">
+<!-- notifylist -->
+<!-- 
+<form method=post action="http://members.notifylist.com/edit/joinlist"><input type=hidden name="list_name" value="ikishk-wootalert">
+<b>Subscribe to wootalert!</b><br>
+<input type=text name="email" value=""><BR>
+<input type=submit value="subscribe"></FORM>
+Powered by <A HREF="http://NotifyList.com">NotifyList.com</A>
+-->
+<!-- /notifylist -->
+<!-- Begin MailChimp Signup Form -->
+<img src=/icon-mailchimp.png>
+<div id="mc_embed_signup">
+<form action="http://kishk.us7.list-manage.com/subscribe/post?u=f3e9ef3cb00987d9b0e0bcf46&amp;id=49f4bee107" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+  <div align=center><b>Subscribe to wootalert!</b></div>
+	<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+	<div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+</form>
+<form action="http://kishk.us7.list-manage.com/subscribe/post?u=f3e9ef3cb00987d9b0e0bcf46&amp;id=6a8a637a5e" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+  <div align=center><b>Subscribe to wootdaily!</b></div>
+  <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+  <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+</form>
+
+</div>
+<!--End mc_embed_signup-->
+
+<br>
+</div>
+  <h3 class="handle" style="width: 170px; cursor: default;">Feedback<span id="linkcopy2" onClick="texttoggle(feedbackblock);" style="cursor: pointer; margin-left: 5px"><img src=up-down.gif style="float: right;"></span></h3>
+<div style="text-align: center; display: none;" id="feedbackblock">
+Comments & suggestions to: <a href="mailto:woot@kishk.org">woot@kishk.org</a><br><br>
+</div>
+
+
+<!-- refresh -->
+  <h3 class="handle" style="width: 170px; cursor: default;">Refresh times<span id="linkcopy2" onClick="texttoggle(refreshblock);" style="cursor: pointer; margin-left: 5px"><img src=up-down.gif style="float: right;"></span></h3>
+<div class="mainblock" style="margin-bottom: 2px; display: none;" id="refreshblock">
+  <div class="centerblock">
+<span class="leftblockmini">No Wootoff</span>
+<span class="rightblockmini">6 hrs</span><br>
+<span class="leftblockmini">100-20%</span>
+<span class="rightblockmini">10 secs</span><br>
+<span class="leftblockmini">20-5%</span>
+<span class="rightblockmini">5 secs</span><br>
+<span class="leftblockmini">5-0%</span>
+<span class="rightblockmini">3 secs</span><br>
+<span class="leftblockmini">Sold out</span>
+<span class="rightblockmini">3 secs</span><br>
+<span class="leftblockmini"> Stalled out? </span>
+<span class="rightblockmini" id="reload" onClick="getWOOT()" style="cursor : pointer;">Force reload</span>
+  </div>
+</div>
+
+</div>
+
+        <div class="plain">
+<!-- woot code starts here -->
+<script type="text/javascript">soundManagerInit();</script>
+
+<div id="donate" class="donate">
+	<div class="topblock">
+<span id="linkcopy2" onclick="texthide(donate);" style="cursor: pointer; margin-left: 5px"><img id="closeimg" src="pixel.png" style="float: right;" height=28 width=28></span>
+<b>
+MailChimp notification lists have been created and tested. Please feel free to subscribe under the Email Alerts section to the right.  There is now a nightly and a seperate one for wootoffs.  Subscribe to both if you'd like.</b><br><br>
+
+<a href=http://www.amazon.com/?tag=kishkorg-20>In these tougher times when you can't spare a few bucks, but still buy stuff on Amazon, please click here to include my referral code before you shop and I'll get 4% referral kickback, at no cost to you!  Thanks!!</a></b><br><br>
+
+Please give what you can so I can continue to host and further develop this site.  Thank you all for coming back.  Extra thank you goes to those who donate frequently.</b><br>
+<a href=#thanks>Thank you for your continued support, this cant stay around without it.</a><br>
+</div>
+
+	</div>
+<div style="height: 100px; width: 600px; text-align: center; clear; both;">
+<b><a href="http://www.bloog.com/?Click=8567" giftarget="_blank">Want to quit smoking? 10% off e-cigs! click here</a></b>
+<p><a href="http://www.bloog.com/?Click=8567"><img border=0 width=610px src="http://www.bloog.com/v/vspfiles/templates/stevenson/images/banners/banner1.gif"></a></p>
+</div>
+<div style="height: 19px; width: 600px; text-align: center; clear; both;">
+Sort:
+<input class="chkGsort" type="radio" onclick="callGsort()" name="sortie" value="gsort" checked>default
+<input class="chkPsort" type="radio" onclick="callPsort();" name="sortie" value="psort">percent
+<input class="chkRsort" type="radio" onclick="callRsort()" name="sortie" value="rsort">remaining
+<input class="chkIsort" type="radio" onclick="callIsort()" name="sortie" value="isort">age
+<!input class="reVerse" type="checkbox" onclick="callResort();"  name="reVerse" id="reVerse">
+<span style="float: right">
+<span id="linkcopy2" onClick="$$('.teaser').each(Element.toggle);" style="cursor: pointer; margin-left: 5px">teasers<img src="up-down.gif"></span>
+<span id="linkcopy2" onClick="textexpand(item_10); textexpand(item_2); textexpand(item_3); textexpand(item_4); textexpand(item_5); textexpand(item_6); textexpand(item_7); textexpand(item_8); textexpand(item_9); textexpand(item_11);" style="cursor: pointer; margin-left: 5px">Expand All<img src="up-down.gif"></span>
+<span id="linkcopy2" onClick="texthide(item_10); texthide(item_2); texthide(item_3); texthide(item_4); texthide(item_5); texthide(item_6); texthide(item_7); texthide(item_8); texthide(item_9); texthide(item_11);" style="cursor: pointer; margin-left: 5px">Hide All<img src="up-down.gif"></span>
+</span>
+</div>
+<!-- add block div here -->
+<div id="page">
+<!-- start woot -->
+<!- start woot again -->
+<div id="group_1" class="section">
+	<h3 class="handle">
+	<img id="wootimg" src="pixel.png" height=20px width=65px />
+	<span id="woottitle" class="headline16">UPDATING...</span>
+	<span id="linkcopy2" onClick="texttoggle(item_10);" style="cursor: pointer; margin-left: 5px"><img id="wootwootoffimg" src="pixel.png" border=0 height=21 width=21><img src=up-down.gif style="float: right;"></span><img id="wootsoldoutimg" src="pixel.png" style="float: right;">
+  <span id="wootprice2" class="headline12" style="float: right;"></span>
+	<span id="wootprogressBlock">
+		<span id="wootprogressbar">&nbsp;
+			<span id="wootprogressMeterBarDone"></span>
+		</span>
+	</span>
+	</h3> <!-- handle h3 -->
+	<span id="wootteaser" class="teaser"></span>
+	<span id="item_10" class="lineitem" style="display: none;">
+		<div class="mainblock">
+			<div class="centerblock">
+				<div class="leftblock">
+					<a id="wootdetailimg" onclick="javascript:window.open(this.href,'popup','width=480,height=360'); return false;">
+					<img id="wootstdimg" border=0 width="300"></a>
+				</div> <!-- leftblockblock -->
+				<div class="rightblock" align=center>
+					<span id=wootsubtitle class="headline12"></span>
+					<div id="wootprice" class="headline22"></div>
+					<div id="wootcondition" class="headline14"></div>
+					<hr width=80%>
+					<div id="wootpercent" class="headline18"></div>
+					<hr width=80%>
+					<a id="wootpurchaseurl" target="_blank" href="">Purchase this product</a><br>
+					<a id="wootblogurl" target="_blank" href="">Product Description Blog</a><br>
+					<a id="wootforumurl" target="_blank" href="">Product Discussion Forum</a><br>
+					<div id="linkcopy2" onClick="texttoggle(wootdesc);" style="cursor: pointer;" align=center>View Description</div>
+					<div id="linkcopy2" onClick="texttoggle(wootmore);" style="cursor: pointer;" align=center>Item/sale info...</div>
+          <a href=wootlog.html>Past items...</a>
+				</div> <!-- rightblock -->
+			</div> <!-- centerblock -->
+			<div class="bottomblock">
+				<span id=wootprods></span><br>
+				<span id="wootdesc" style="text-decoration: none; display: none; text-align: left;"></span>
+				<span id="wootmore" style="text-decoration: none; display: none; text-align: center;">
+					Item first appeared on <span id=wootitemstart></span><br>
+					Item has been on sale for <span id=wootitemelapsed></span>.<br>
+
+					Item estimated to sell out in <span id=wootitemremaining></span><small>*</small>.<br><br>
+					Cache was last updated:
+					<span id=wootcachetime></span> ago.<br><br>
+					Cache has data that was last updated by Woot:<br>
+					<span id=wootlastBuildDate></span>, <span id=wootage></span> ago.<br>
+					<br>
+				</span> <!-- more -->
+			</div> <!-- bottomblock -->
+			<span id=wootwootoff style="display: none;"></span>
+			<span id=wootsoldout style="display: none;"></span>
+			<span id=wootwoottime style="display: none;"></span>
+			<span id=wootscripttime style="display: none;"></span>
+			<span id=wootbrowsertime style="display: none;"></span>
+			<span id=wootpercent2 style="display: none;"></span>
+			<span id=globalwootoff style="display: none;"></span>
+			<span id=globalpercent style="display: none;"></span>
+			<span id=wootactive style="display: none;"></span>
+			<span id=wootpagedversion style="display: none;"></span>
+			<span id="wootmore" style="text-decoration: none; display: none;">
+		</div> <!-- mainblock -->
+	</span> <!-- item -->
+</div> <!-- group -->
+<!- start kids -->
+<div id="group_2" class="section">
+	<h3 class="handle">
+	<img id="kidsimg" src="pixel.png" height=20px width=65px />
+	<span id="kidstitle" class="headline16">UPDATING...</span>
+	<span id="linkcopy2" onClick="texttoggle(item_2);" style="cursor: pointer; margin-left: 5px"><img id="kidswootoffimg" src="pixel.png" border=0 height=21 width=21><img src=up-down.gif style="float: right;"></span><img id="kidssoldoutimg" src="pixel.png" style="float: right;">
+  <span id="kidsprice2" class="headline12" style="float: right;"></span>
+	<span id="kidsprogressBlock">
+		<span id="kidsprogressbar">&nbsp;
+			<span id="kidsprogressMeterBarDone"></span>
+		</span>
+	</span>
+	</h3> <!-- handle h3 -->
+	<span id="kidsteaser" class="teaser"></span>
+	<span id="item_2" class="lineitem" style="display: none;">
+		<div class="mainblock">
+			<div class="centerblock">
+				<div class="leftblock">
+					<a id="kidsdetailimg" onclick="javascript:window.open(this.href,'popup','width=480,height=360'); return false;">
+					<img id="kidsstdimg" border=0 width="300"></a>
+				</div> <!-- leftblockblock -->
+				<div class="rightblock" align=center>
+					<span id=kidssubtitle class="headline12"></span>
+					<div id="kidsprice" class="headline22"></div>
+					<div id="kidscondition" class="headline14"></div>
+					<hr width=80%>
+					<div id="kidspercent" class="headline18"></div>
+					<hr width=80%>
+					<a id="kidspurchaseurl" target="_blank" href="">Purchase this product</a><br>
+					<a id="kidsblogurl" target="_blank" href="">Product Description Blog</a><br>
+					<a id="kidsforumurl" target="_blank" href="">Product Discussion Forum</a><br>
+					<div id="linkcopy2" onClick="texttoggle(kidsdesc);" style="cursor: pointer;" align=center>View Description</div>
+					<div id="linkcopy2" onClick="texttoggle(kidsmore);" style="cursor: pointer;" align=center>Item/sale info...</div>
+          <a href=kidslog.html>Past items...</a>
+				</div> <!-- rightblock -->
+			</div> <!-- centerblock -->
+			<div class="bottomblock">
+				<span id=kidsprods></span><br>
+				<span id="kidsdesc" style="text-decoration: none; display: none; text-align: left;"></span>
+				<span id="kidsmore" style="text-decoration: none; display: none; text-align: center;">
+					Item first appeared on <span id=kidsitemstart></span><br>
+					Item has been on sale for <span id=kidsitemelapsed></span>.<br>
+
+					Item estimated to sell out in <span id=kidsitemremaining></span><small>*</small>.<br><br>
+					Cache was last updated:
+					<span id=kidscachetime></span> ago.<br><br>
+					Cache has data that was last updated by Woot:<br>
+					<span id=kidslastBuildDate></span>, <span id=kidsage></span> ago.<br>
+					<br>
+				</span> <!-- more -->
+			</div> <!-- bottomblock -->
+			<span id=kidswootoff style="display: none;"></span>
+			<span id=kidssoldout style="display: none;"></span>
+			<span id=kidswoottime style="display: none;"></span>
+			<span id=kidsscripttime style="display: none;"></span>
+			<span id=kidsbrowsertime style="display: none;"></span>
+			<span id=kidspercent2 style="display: none;"></span>
+			<span id=kidsactive style="display: none;"></span>
+			<span id=kidspagedversion style="display: none;"></span>
+			<span id="kidsmore" style="text-decoration: none; display: none;">
+		</div> <!-- mainblock -->
+	</span> <!-- item -->
+</div> <!-- group -->
+<!- start sellout -->
+<div id="group_3" class="section">
+	<h3 class="handle">
+	<img id="selloutimg" src="pixel.png" height=20px width=65px />
+	<span id="sellouttitle" class="headline16">UPDATING...</span>
+	<span id="linkcopy2" onClick="texttoggle(item_3);" style="cursor: pointer; margin-left: 5px"><img id="selloutwootoffimg" src="pixel.png" border=0 height=21 width=21><img src=up-down.gif style="float: right;"></span><img id="selloutsoldoutimg" src="pixel.png" style="float: right;">
+  <span id="selloutprice2" class="headline12" style="float: right;"></span>
+	<span id="selloutprogressBlock">
+		<span id="selloutprogressbar">&nbsp;
+			<span id="selloutprogressMeterBarDone"></span>
+		</span>
+	</span>
+	</h3> <!-- handle h3 -->
+	<span id="selloutteaser" class="teaser"></span>
+	<span id="item_3" class="lineitem" style="display: none;">
+		<div class="mainblock">
+			<div class="centerblock">
+				<div class="leftblock">
+					<a id="selloutdetailimg" onclick="javascript:window.open(this.href,'popup','width=480,height=360'); return false;">
+					<img id="selloutstdimg" border=0 width="300"></a>
+				</div> <!-- leftblockblock -->
+				<div class="rightblock" align=center>
+					<span id=selloutsubtitle class="headline12"></span>
+					<div id="selloutprice" class="headline22"></div>
+					<div id="selloutcondition" class="headline14"></div>
+					<hr width=80%>
+					<div id="selloutpercent" class="headline18"></div>
+					<hr width=80%>
+					<a id="selloutpurchaseurl" target="_blank" href="">Purchase this product</a><br>
+					<a id="selloutblogurl" target="_blank" href="">Product Description Blog</a><br>
+					<a id="selloutforumurl" target="_blank" href="">Product Discussion Forum</a><br>
+					<div id="linkcopy2" onClick="texttoggle(selloutdesc);" style="cursor: pointer;" align=center>View Description</div>
+					<div id="linkcopy2" onClick="texttoggle(selloutmore);" style="cursor: pointer;" align=center>Item/sale info...</div>
+          <a href=selloutlog.html>Past items...</a>
+				</div> <!-- rightblock -->
+			</div> <!-- centerblock -->
+			<div class="bottomblock">
+				<span id=selloutprods></span><br>
+				<span id="selloutdesc" style="text-decoration: none; display: none; text-align: left;"></span>
+				<span id="selloutmore" style="text-decoration: none; display: none; text-align: center;">
+					Item first appeared on <span id=selloutitemstart></span><br>
+					Item has been on sale for <span id=selloutitemelapsed></span>.<br>
+
+					Item estimated to sell out in <span id=selloutitemremaining></span><small>*</small>.<br><br>
+					Cache was last updated:
+					<span id=selloutcachetime></span> ago.<br><br>
+					Cache has data that was last updated by Woot:<br>
+					<span id=selloutlastBuildDate></span>, <span id=selloutage></span> ago.<br>
+					<br>
+				</span> <!-- more -->
+			</div> <!-- bottomblock -->
+			<span id=selloutwootoff style="display: none;"></span>
+			<span id=selloutsoldout style="display: none;"></span>
+			<span id=selloutwoottime style="display: none;"></span>
+			<span id=selloutscripttime style="display: none;"></span>
+			<span id=selloutbrowsertime style="display: none;"></span>
+			<span id=selloutpercent2 style="display: none;"></span>
+			<span id=selloutactive style="display: none;"></span>
+			<span id=selloutpagedversion style="display: none;"></span>
+			<span id="selloutmore" style="text-decoration: none; display: none;">
+		</div> <!-- mainblock -->
+	</span> <!-- item -->
+</div> <!-- group -->
+<!- start home -->
+<div id="group_4" class="section">
+	<h3 class="handle">
+	<img id="homeimg" src="pixel.png" height=20px width=65px />
+	<span id="hometitle" class="headline16">UPDATING...</span>
+	<span id="linkcopy2" onClick="texttoggle(item_4);" style="cursor: pointer; margin-left: 5px"><img id="homewootoffimg" src="pixel.png" border=0 height=21 width=21><img src=up-down.gif style="float: right;"></span><img id="homesoldoutimg" src="pixel.png" style="float: right;">
+  <span id="homeprice2" class="headline12" style="float: right;"></span>
+	<span id="homeprogressBlock">
+		<span id="homeprogressbar">&nbsp;
+			<span id="homeprogressMeterBarDone"></span>
+		</span>
+	</span>
+	</h3> <!-- handle h3 -->
+	<span id="hometeaser" class="teaser"></span>
+	<span id="item_4" class="lineitem" style="display: none;">
+		<div class="mainblock">
+			<div class="centerblock">
+				<div class="leftblock">
+					<a id="homedetailimg" onclick="javascript:window.open(this.href,'popup','width=480,height=360'); return false;">
+					<img id="homestdimg" border=0 width="300"></a>
+				</div> <!-- leftblockblock -->
+				<div class="rightblock" align=center>
+					<span id=homesubtitle class="headline12"></span>
+					<div id="homeprice" class="headline22"></div>
+					<div id="homecondition" class="headline14"></div>
+					<hr width=80%>
+					<div id="homepercent" class="headline18"></div>
+					<hr width=80%>
+					<a id="homepurchaseurl" target="_blank" href="">Purchase this product</a><br>
+					<a id="homeblogurl" target="_blank" href="">Product Description Blog</a><br>
+					<a id="homeforumurl" target="_blank" href="">Product Discussion Forum</a><br>
+					<div id="linkcopy2" onClick="texttoggle(homedesc);" style="cursor: pointer;" align=center>View Description</div>
+					<div id="linkcopy2" onClick="texttoggle(homemore);" style="cursor: pointer;" align=center>Item/sale info...</div>
+          <a href=homelog.html>Past items...</a>
+				</div> <!-- rightblock -->
+			</div> <!-- centerblock -->
+			<div class="bottomblock">
+				<span id=homeprods></span><br>
+				<span id="homedesc" style="text-decoration: none; display: none; text-align: left;"></span>
+				<span id="homemore" style="text-decoration: none; display: none; text-align: center;">
+					Item first appeared on <span id=homeitemstart></span><br>
+					Item has been on sale for <span id=homeitemelapsed></span>.<br>
+
+					Item estimated to sell out in <span id=homeitemremaining></span><small>*</small>.<br><br>
+					Cache was last updated:
+					<span id=homecachetime></span> ago.<br><br>
+					Cache has data that was last updated by Woot:<br>
+					<span id=homelastBuildDate></span>, <span id=homeage></span> ago.<br>
+					<br>
+				</span> <!-- more -->
+			</div> <!-- bottomblock -->
+			<span id=homewootoff style="display: none;"></span>
+			<span id=homesoldout style="display: none;"></span>
+			<span id=homewoottime style="display: none;"></span>
+			<span id=homescripttime style="display: none;"></span>
+			<span id=homebrowsertime style="display: none;"></span>
+			<span id=homepercent2 style="display: none;"></span>
+			<span id=homeactive style="display: none;"></span>
+			<span id=homepagedversion style="display: none;"></span>
+			<span id="homemore" style="text-decoration: none; display: none;">
+		</div> <!-- mainblock -->
+	</span> <!-- item -->
+</div> <!-- group -->
+<!- start shirt -->
+<div id="group_5" class="section">
+	<h3 class="handle">
+	<img id="shirtimg" src="pixel.png" height=20px width=65px />
+	<span id="shirttitle" class="headline16">UPDATING...</span>
+	<span id="linkcopy2" onClick="texttoggle(item_5);" style="cursor: pointer; margin-left: 5px"><img id="shirtwootoffimg" src="pixel.png" border=0 height=21 width=21><img src=up-down.gif style="float: right;"></span><img id="shirtsoldoutimg" src="pixel.png" style="float: right;">
+  <span id="shirtprice2" class="headline12" style="float: right;"></span>
+	<span id="shirtprogressBlock">
+		<span id="shirtprogressbar">&nbsp;
+			<span id="shirtprogressMeterBarDone"></span>
+		</span>
+	</span>
+	</h3> <!-- handle h3 -->
+	<span id="shirtteaser" class="teaser"></span>
+	<span id="item_5" class="lineitem" style="display: none;">
+		<div class="mainblock">
+			<div class="centerblock">
+				<div class="leftblock">
+					<a id="shirtdetailimg" onclick="javascript:window.open(this.href,'popup','width=480,height=360'); return false;">
+					<img id="shirtstdimg" border=0 width="300"></a>
+				</div> <!-- leftblockblock -->
+				<div class="rightblock" align=center>
+					<span id=shirtsubtitle class="headline12"></span>
+					<div id="shirtprice" class="headline22"></div>
+					<div id="shirtcondition" class="headline14"></div>
+					<hr width=80%>
+					<div id="shirtpercent" class="headline18"></div>
+					<hr width=80%>
+					<a id="shirtpurchaseurl" target="_blank" href="">Purchase this product</a><br>
+					<a id="shirtblogurl" target="_blank" href="">Product Description Blog</a><br>
+					<a id="shirtforumurl" target="_blank" href="">Product Discussion Forum</a><br>
+					<div id="linkcopy2" onClick="texttoggle(shirtdesc);" style="cursor: pointer;" align=center>View Description</div>
+					<div id="linkcopy2" onClick="texttoggle(shirtmore);" style="cursor: pointer;" align=center>Item/sale info...</div>
+          <a href=shirtlog.html>Past items...</a>
+				</div> <!-- rightblock -->
+			</div> <!-- centerblock -->
+			<div class="bottomblock">
+				<span id=shirtprods></span><br>
+				<span id="shirtdesc" style="text-decoration: none; display: none; text-align: left;"></span>
+				<span id="shirtmore" style="text-decoration: none; display: none; text-align: center;">
+					Item first appeared on <span id=shirtitemstart></span><br>
+					Item has been on sale for <span id=shirtitemelapsed></span>.<br>
+
+					Item estimated to sell out in <span id=shirtitemremaining></span><small>*</small>.<br><br>
+					Cache was last updated:
+					<span id=shirtcachetime></span> ago.<br><br>
+					Cache has data that was last updated by Woot:<br>
+					<span id=shirtlastBuildDate></span>, <span id=shirtage></span> ago.<br>
+					<br>
+				</span> <!-- more -->
+			</div> <!-- bottomblock -->
+			<span id=shirtwootoff style="display: none;"></span>
+			<span id=shirtsoldout style="display: none;"></span>
+			<span id=shirtwoottime style="display: none;"></span>
+			<span id=shirtscripttime style="display: none;"></span>
+			<span id=shirtbrowsertime style="display: none;"></span>
+			<span id=shirtpercent2 style="display: none;"></span>
+			<span id=shirtactive style="display: none;"></span>
+			<span id=shirtpagedversion style="display: none;"></span>
+			<span id="shirtmore" style="text-decoration: none; display: none;">
+		</div> <!-- mainblock -->
+	</span> <!-- item -->
+</div> <!-- group -->
+<!- start sport -->
+<div id="group_6" class="section">
+	<h3 class="handle">
+	<img id="sportimg" src="pixel.png" height=20px width=65px />
+	<span id="sporttitle" class="headline16">UPDATING...</span>
+	<span id="linkcopy2" onClick="texttoggle(item_6);" style="cursor: pointer; margin-left: 5px"><img id="sportwootoffimg" src="pixel.png" border=0 height=21 width=21><img src=up-down.gif style="float: right;"></span><img id="sportsoldoutimg" src="pixel.png" style="float: right;">
+  <span id="sportprice2" class="headline12" style="float: right;"></span>
+	<span id="sportprogressBlock">
+		<span id="sportprogressbar">&nbsp;
+			<span id="sportprogressMeterBarDone"></span>
+		</span>
+	</span>
+	</h3> <!-- handle h3 -->
+	<span id="sportteaser" class="teaser"></span>
+	<span id="item_6" class="lineitem" style="display: none;">
+		<div class="mainblock">
+			<div class="centerblock">
+				<div class="leftblock">
+					<a id="sportdetailimg" onclick="javascript:window.open(this.href,'popup','width=480,height=360'); return false;">
+					<img id="sportstdimg" border=0 width="300"></a>
+				</div> <!-- leftblockblock -->
+				<div class="rightblock" align=center>
+					<span id=sportsubtitle class="headline12"></span>
+					<div id="sportprice" class="headline22"></div>
+					<div id="sportcondition" class="headline14"></div>
+					<hr width=80%>
+					<div id="sportpercent" class="headline18"></div>
+					<hr width=80%>
+					<a id="sportpurchaseurl" target="_blank" href="">Purchase this product</a><br>
+					<a id="sportblogurl" target="_blank" href="">Product Description Blog</a><br>
+					<a id="sportforumurl" target="_blank" href="">Product Discussion Forum</a><br>
+					<div id="linkcopy2" onClick="texttoggle(sportdesc);" style="cursor: pointer;" align=center>View Description</div>
+					<div id="linkcopy2" onClick="texttoggle(sportmore);" style="cursor: pointer;" align=center>Item/sale info...</div>
+          <a href=sportlog.html>Past items...</a>
+				</div> <!-- rightblock -->
+			</div> <!-- centerblock -->
+			<div class="bottomblock">
+				<span id=sportprods></span><br>
+				<span id="sportdesc" style="text-decoration: none; display: none; text-align: left;"></span>
+				<span id="sportmore" style="text-decoration: none; display: none; text-align: center;">
+					Item first appeared on <span id=sportitemstart></span><br>
+					Item has been on sale for <span id=sportitemelapsed></span>.<br>
+
+					Item estimated to sell out in <span id=sportitemremaining></span><small>*</small>.<br><br>
+					Cache was last updated:
+					<span id=sportcachetime></span> ago.<br><br>
+					Cache has data that was last updated by Woot:<br>
+					<span id=sportlastBuildDate></span>, <span id=sportage></span> ago.<br>
+					<br>
+				</span> <!-- more -->
+			</div> <!-- bottomblock -->
+			<span id=sportwootoff style="display: none;"></span>
+			<span id=sportsoldout style="display: none;"></span>
+			<span id=sportwoottime style="display: none;"></span>
+			<span id=sportscripttime style="display: none;"></span>
+			<span id=sportbrowsertime style="display: none;"></span>
+			<span id=sportpercent2 style="display: none;"></span>
+			<span id=sportactive style="display: none;"></span>
+			<span id=sportpagedversion style="display: none;"></span>
+			<span id="sportmore" style="text-decoration: none; display: none;">
+		</div> <!-- mainblock -->
+	</span> <!-- item -->
+</div> <!-- group -->
+<!- start tech -->
+<div id="group_7" class="section">
+	<h3 class="handle">
+	<img id="techimg" src="pixel.png" height=20px width=65px />
+	<span id="techtitle" class="headline16">UPDATING...</span>
+	<span id="linkcopy2" onClick="texttoggle(item_7);" style="cursor: pointer; margin-left: 5px"><img id="techwootoffimg" src="pixel.png" border=0 height=21 width=21><img src=up-down.gif style="float: right;"></span><img id="techsoldoutimg" src="pixel.png" style="float: right;">
+  <span id="techprice2" class="headline12" style="float: right;"></span>
+	<span id="techprogressBlock">
+		<span id="techprogressbar">&nbsp;
+			<span id="techprogressMeterBarDone"></span>
+		</span>
+	</span>
+	</h3> <!-- handle h3 -->
+	<span id="techteaser" class="teaser"></span>
+	<span id="item_7" class="lineitem" style="display: none;">
+		<div class="mainblock">
+			<div class="centerblock">
+				<div class="leftblock">
+					<a id="techdetailimg" onclick="javascript:window.open(this.href,'popup','width=480,height=360'); return false;">
+					<img id="techstdimg" border=0 width="300"></a>
+				</div> <!-- leftblockblock -->
+				<div class="rightblock" align=center>
+					<span id=techsubtitle class="headline12"></span>
+					<div id="techprice" class="headline22"></div>
+					<div id="techcondition" class="headline14"></div>
+					<hr width=80%>
+					<div id="techpercent" class="headline18"></div>
+					<hr width=80%>
+					<a id="techpurchaseurl" target="_blank" href="">Purchase this product</a><br>
+					<a id="techblogurl" target="_blank" href="">Product Description Blog</a><br>
+					<a id="techforumurl" target="_blank" href="">Product Discussion Forum</a><br>
+					<div id="linkcopy2" onClick="texttoggle(techdesc);" style="cursor: pointer;" align=center>View Description</div>
+					<div id="linkcopy2" onClick="texttoggle(techmore);" style="cursor: pointer;" align=center>Item/sale info...</div>
+          <a href=techlog.html>Past items...</a>
+				</div> <!-- rightblock -->
+			</div> <!-- centerblock -->
+			<div class="bottomblock">
+				<span id=techprods></span><br>
+				<span id="techdesc" style="text-decoration: none; display: none; text-align: left;"></span>
+				<span id="techmore" style="text-decoration: none; display: none; text-align: center;">
+					Item first appeared on <span id=techitemstart></span><br>
+					Item has been on sale for <span id=techitemelapsed></span>.<br>
+
+					Item estimated to sell out in <span id=techitemremaining></span><small>*</small>.<br><br>
+					Cache was last updated:
+					<span id=techcachetime></span> ago.<br><br>
+					Cache has data that was last updated by Woot:<br>
+					<span id=techlastBuildDate></span>, <span id=techage></span> ago.<br>
+					<br>
+				</span> <!-- more -->
+			</div> <!-- bottomblock -->
+			<span id=techwootoff style="display: none;"></span>
+			<span id=techsoldout style="display: none;"></span>
+			<span id=techwoottime style="display: none;"></span>
+			<span id=techscripttime style="display: none;"></span>
+			<span id=techbrowsertime style="display: none;"></span>
+			<span id=techpercent2 style="display: none;"></span>
+			<span id=techactive style="display: none;"></span>
+			<span id=techpagedversion style="display: none;"></span>
+			<span id="techmore" style="text-decoration: none; display: none;">
+		</div> <!-- mainblock -->
+	</span> <!-- item -->
+</div> <!-- group -->
+<!- start tools -->
+<div id="group_8" class="section">
+	<h3 class="handle">
+	<img id="toolsimg" src="pixel.png" height=20px width=65px />
+	<span id="toolstitle" class="headline16">UPDATING...</span>
+	<span id="linkcopy2" onClick="texttoggle(item_8);" style="cursor: pointer; margin-left: 5px"><img id="toolswootoffimg" src="pixel.png" border=0 height=21 width=21><img src=up-down.gif style="float: right;"></span><img id="toolssoldoutimg" src="pixel.png" style="float: right;">
+  <span id="toolsprice2" class="headline12" style="float: right;"></span>
+	<span id="toolsprogressBlock">
+		<span id="toolsprogressbar">&nbsp;
+			<span id="toolsprogressMeterBarDone"></span>
+		</span>
+	</span>
+	</h3> <!-- handle h3 -->
+	<span id="toolsteaser" class="teaser"></span>
+	<span id="item_8" class="lineitem" style="display: none;">
+		<div class="mainblock">
+			<div class="centerblock">
+				<div class="leftblock">
+					<a id="toolsdetailimg" onclick="javascript:window.open(this.href,'popup','width=480,height=360'); return false;">
+					<img id="toolsstdimg" border=0 width="300"></a>
+				</div> <!-- leftblockblock -->
+				<div class="rightblock" align=center>
+					<span id=toolssubtitle class="headline12"></span>
+					<div id="toolsprice" class="headline22"></div>
+					<div id="toolscondition" class="headline14"></div>
+					<hr width=80%>
+					<div id="toolspercent" class="headline18"></div>
+					<hr width=80%>
+					<a id="toolspurchaseurl" target="_blank" href="">Purchase this product</a><br>
+					<a id="toolsblogurl" target="_blank" href="">Product Description Blog</a><br>
+					<a id="toolsforumurl" target="_blank" href="">Product Discussion Forum</a><br>
+					<div id="linkcopy2" onClick="texttoggle(toolsdesc);" style="cursor: pointer;" align=center>View Description</div>
+					<div id="linkcopy2" onClick="texttoggle(toolsmore);" style="cursor: pointer;" align=center>Item/sale info...</div>
+          <a href=toolslog.html>Past items...</a>
+				</div> <!-- rightblock -->
+			</div> <!-- centerblock -->
+			<div class="bottomblock">
+				<span id=toolsprods></span><br>
+				<span id="toolsdesc" style="text-decoration: none; display: none; text-align: left;"></span>
+				<span id="toolsmore" style="text-decoration: none; display: none; text-align: center;">
+					Item first appeared on <span id=toolsitemstart></span><br>
+					Item has been on sale for <span id=toolsitemelapsed></span>.<br>
+
+					Item estimated to sell out in <span id=toolsitemremaining></span><small>*</small>.<br><br>
+					Cache was last updated:
+					<span id=toolscachetime></span> ago.<br><br>
+					Cache has data that was last updated by Woot:<br>
+					<span id=toolslastBuildDate></span>, <span id=toolsage></span> ago.<br>
+					<br>
+				</span> <!-- more -->
+			</div> <!-- bottomblock -->
+			<span id=toolswootoff style="display: none;"></span>
+			<span id=toolssoldout style="display: none;"></span>
+			<span id=toolswoottime style="display: none;"></span>
+			<span id=toolsscripttime style="display: none;"></span>
+			<span id=toolsbrowsertime style="display: none;"></span>
+			<span id=toolspercent2 style="display: none;"></span>
+			<span id=toolsactive style="display: none;"></span>
+			<span id=toolspagedversion style="display: none;"></span>
+			<span id="toolsmore" style="text-decoration: none; display: none;">
+		</div> <!-- mainblock -->
+	</span> <!-- item -->
+</div> <!-- group -->
+<!- start wine -->
+<div id="group_9" class="section">
+	<h3 class="handle">
+	<img id="wineimg" src="pixel.png" height=20px width=65px />
+	<span id="winetitle" class="headline16">UPDATING...</span>
+	<span id="linkcopy2" onClick="texttoggle(item_9);" style="cursor: pointer; margin-left: 5px"><img id="winewootoffimg" src="pixel.png" border=0 height=21 width=21><img src=up-down.gif style="float: right;"></span><img id="winesoldoutimg" src="pixel.png" style="float: right;">
+  <span id="wineprice2" class="headline12" style="float: right;"></span>
+	<span id="wineprogressBlock">
+		<span id="wineprogressbar">&nbsp;
+			<span id="wineprogressMeterBarDone"></span>
+		</span>
+	</span>
+	</h3> <!-- handle h3 -->
+	<span id="wineteaser" class="teaser"></span>
+	<span id="item_9" class="lineitem" style="display: none;">
+		<div class="mainblock">
+			<div class="centerblock">
+				<div class="leftblock">
+					<a id="winedetailimg" onclick="javascript:window.open(this.href,'popup','width=480,height=360'); return false;">
+					<img id="winestdimg" border=0 width="300"></a>
+				</div> <!-- leftblockblock -->
+				<div class="rightblock" align=center>
+					<span id=winesubtitle class="headline12"></span>
+					<div id="wineprice" class="headline22"></div>
+					<div id="winecondition" class="headline14"></div>
+					<hr width=80%>
+					<div id="winepercent" class="headline18"></div>
+					<hr width=80%>
+					<a id="winepurchaseurl" target="_blank" href="">Purchase this product</a><br>
+					<a id="wineblogurl" target="_blank" href="">Product Description Blog</a><br>
+					<a id="wineforumurl" target="_blank" href="">Product Discussion Forum</a><br>
+					<div id="linkcopy2" onClick="texttoggle(winedesc);" style="cursor: pointer;" align=center>View Description</div>
+					<div id="linkcopy2" onClick="texttoggle(winemore);" style="cursor: pointer;" align=center>Item/sale info...</div>
+          <a href=winelog.html>Past items...</a>
+				</div> <!-- rightblock -->
+			</div> <!-- centerblock -->
+			<div class="bottomblock">
+				<span id=wineprods></span><br>
+				<span id="winedesc" style="text-decoration: none; display: none; text-align: left;"></span>
+				<span id="winemore" style="text-decoration: none; display: none; text-align: center;">
+					Item first appeared on <span id=wineitemstart></span><br>
+					Item has been on sale for <span id=wineitemelapsed></span>.<br>
+
+					Item estimated to sell out in <span id=wineitemremaining></span><small>*</small>.<br><br>
+					Cache was last updated:
+					<span id=winecachetime></span> ago.<br><br>
+					Cache has data that was last updated by Woot:<br>
+					<span id=winelastBuildDate></span>, <span id=wineage></span> ago.<br>
+					<br>
+				</span> <!-- more -->
+			</div> <!-- bottomblock -->
+			<span id=winewootoff style="display: none;"></span>
+			<span id=winesoldout style="display: none;"></span>
+			<span id=winewoottime style="display: none;"></span>
+			<span id=winescripttime style="display: none;"></span>
+			<span id=winebrowsertime style="display: none;"></span>
+			<span id=winepercent2 style="display: none;"></span>
+			<span id=wineactive style="display: none;"></span>
+			<span id=winepagedversion style="display: none;"></span>
+			<span id="winemore" style="text-decoration: none; display: none;">
+		</div> <!-- mainblock -->
+	</span> <!-- item -->
+</div> <!-- group -->
+<!- start accessories -->
+<div id="group_10" class="section">
+	<h3 class="handle">
+	<img id="accessoriesimg" src="pixel.png" height=20px width=65px />
+	<span id="accessoriestitle" class="headline16">UPDATING...</span>
+	<span id="linkcopy2" onClick="texttoggle(item_11);" style="cursor: pointer; margin-left: 5px"><img id="accessorieswootoffimg" src="pixel.png" border=0 height=21 width=21><img src=up-down.gif style="float: right;"></span><img id="accessoriessoldoutimg" src="pixel.png" style="float: right;">
+  <span id="accessoriesprice2" class="headline12" style="float: right;"></span>
+	<span id="accessoriesprogressBlock">
+		<span id="accessoriesprogressbar">&nbsp;
+			<span id="accessoriesprogressMeterBarDone"></span>
+		</span>
+	</span>
+	</h3> <!-- handle h3 -->
+	<span id="accessoriesteaser" class="teaser"></span>
+	<span id="item_11" class="lineitem" style="display: none;">
+		<div class="mainblock">
+			<div class="centerblock">
+				<div class="leftblock">
+					<a id="accessoriesdetailimg" onclick="javascript:window.open(this.href,'popup','width=480,height=360'); return false;">
+					<img id="accessoriesstdimg" border=0 width="300"></a>
+				</div> <!-- leftblockblock -->
+				<div class="rightblock" align=center>
+					<span id=accessoriessubtitle class="headline12"></span>
+					<div id="accessoriesprice" class="headline22"></div>
+					<div id="accessoriescondition" class="headline14"></div>
+					<hr width=80%>
+					<div id="accessoriespercent" class="headline18"></div>
+					<hr width=80%>
+					<a id="accessoriespurchaseurl" target="_blank" href="">Purchase this product</a><br>
+					<a id="accessoriesblogurl" target="_blank" href="">Product Description Blog</a><br>
+					<a id="accessoriesforumurl" target="_blank" href="">Product Discussion Forum</a><br>
+					<div id="linkcopy2" onClick="texttoggle(accessoriesdesc);" style="cursor: pointer;" align=center>View Description</div>
+					<div id="linkcopy2" onClick="texttoggle(accessoriesmore);" style="cursor: pointer;" align=center>Item/sale info...</div>
+          <a href=accessorieslog.html>Past items...</a>
+				</div> <!-- rightblock -->
+			</div> <!-- centerblock -->
+			<div class="bottomblock">
+				<span id=accessoriesprods></span><br>
+				<span id="accessoriesdesc" style="text-decoration: none; display: none; text-align: left;"></span>
+				<span id="accessoriesmore" style="text-decoration: none; display: none; text-align: center;">
+					Item first appeared on <span id=accessoriesitemstart></span><br>
+					Item has been on sale for <span id=accessoriesitemelapsed></span>.<br>
+
+					Item estimated to sell out in <span id=accessoriesitemremaining></span><small>*</small>.<br><br>
+					Cache was last updated:
+					<span id=accessoriescachetime></span> ago.<br><br>
+					Cache has data that was last updated by Woot:<br>
+					<span id=accessorieslastBuildDate></span>, <span id=accessoriesage></span> ago.<br>
+					<br>
+				</span> <!-- more -->
+			</div> <!-- bottomblock -->
+			<span id=accessorieswootoff style="display: none;"></span>
+			<span id=accessoriessoldout style="display: none;"></span>
+			<span id=accessorieswoottime style="display: none;"></span>
+			<span id=accessoriesscripttime style="display: none;"></span>
+			<span id=accessoriesbrowsertime style="display: none;"></span>
+			<span id=accessoriespercent2 style="display: none;"></span>
+			<span id=accessoriesactive style="display: none;"></span>
+			<span id=accessoriespagedversion style="display: none;"></span>
+			<span id="accessoriesmore" style="text-decoration: none; display: none;">
+		</div> <!-- mainblock -->
+	</span> <!-- item -->
+</div> <!-- group -->
+</div> <!-- page div -->
+<br>
+<!----->
+
+  <span id="linkcopy" onClick="texttoggle(expcopy);" style="cursor: pointer;">Version, copyright, & other information</span>
+
+  <div id="expcopy" style="text-decoration: none; display: none; width: 600px">
+<br>
+  <b>ikishk AJAX Client with perl backend, v3.x</b><br>
+  <font face="Arial" size="2">
+    Audio <a href=http://www.schillmania.com/projects/soundmanager/>soundmanager</a> by Scott Schiller<br>
+
+    Inspired by BeerMovies Mod, <a href="http://black2d.com/" target="_blank">Black2d</a>, and <a href="http://yellowbkpk.com/wootcheck.php"
+            target="_blank">yellowbkpk</a> mod.<br>
+    <a href=http://woot.kishk.org/wootchkr>Download the code and setup a mirror<a><br><br>
+    -Click the "sort" radio buttons to change the order of listing.  Click the selected button and it will reverse sort<br>
+    -To preview audio cues/alerts, Click the links next to the checkbox.
+    -If you see negative last updated times, you need an NTP client on your machine. Try <a href=http://www.arachnoid.com/abouttime/index.html>AboutTime</a><br><br>
+    *Estimated time is calculated by taking the time difference of the item start time and the browser query time, then factoring in how long it took to get to the current percentage.  Based on that, the remaining time can be estimated.  Results may vary based on product quantity, speed, and woot employees "pushing" a product through by lowering the sale inventory.
+    </font>
+  </div>
+
+        </div> <!-- plain -->
+
+<br>
+<a name=thanks></a>
+<center>
+
+</div>
+
+<!-- woot code ends here -->
+
+      <div class="visualClear">&nbsp;</div>
+
+</div>
+
+    </div>
+
+<hr class="netscape4" />
+<div i18n:translate="description_copyright" tal:omit-tag="">
+<div id="portal-footer" align=center>
+Copyright &copy; 2004-2013 by 
+<SCRIPT TYPE=text/javascript>
+<!-- BEGIN OBFUSCATION
+   fR8CTsbQty=('isaac' + '@' + 'kishk' + '.org') 
+   document.write('<A href=mailto:' + fR8CTsbQty + '>' + 'Isaac Kishk' + '</a>')
+
+ //-->
+</SCRIPT>
+
+<NOSCRIPT>
+  <em>Email address protected by JavaScript.
+  Please enable JavaScript for contact info.</em> <BR>
+</NOSCRIPT> and <SCRIPT TYPE=text/javascript>
+<!-- BEGIN OBFUSCATION
+   fR8CTsbQty=('susan' + '@' + 'kishk' + '.org') 
+   document.write('<A href=mailto:' + fR8CTsbQty + '>' + 'Susan Kishk' + '</a>')
+
+ //-->
+</SCRIPT>
+<NOSCRIPT>
+  <em>Email address protected by JavaScript.
+  Please enable JavaScript for contact info.</em>
+</NOSCRIPT><br>
+
+Site and web services graciously donated by
+<SCRIPT TYPE=text/javascript>
+<!-- BEGIN OBFUSCATION
+   fR8CTsbQty=('abrigante' + '@' + 'gmail' + '.com') 
+   document.write('<A href=mailto:' + fR8CTsbQty + '>' + 'Angelo Brigante' + '</a>.')
+ //-->
+</SCRIPT>
+<NOSCRIPT>
+  <em>Email address protected by JavaScript.
+  Please enable JavaScript for contact info.</em>
+</NOSCRIPT>
+</div>
+</div>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-508732-6";
+urchinTracker();
+
+var i=0;
+for (i=0;i<=30;i++)
+{
+//donatefade();
+////setTimeout('donatefade()', 30000);
+}
+
+// drag/drop
+	// <![CDATA[
+//	Sortable.create('group_1',{tag:'div',dropOnEmpty: true, containment: sections,only:'lineitem'});
+//	Sortable.create('page',{tag:'div',only:'section',handle:'handle'});
+	Sortable.create('page',{tag:'div',only:'section',handle:'handle'});
+  
+	// ]]>
+
+  /*
+  Debug Functions for checking the group and item order
+  */
+  function getGroupOrder() {
+    var sections = document.getElementsByClassName('page');
+    var alerttext = '';
+    sections.each(function(section) {
+      var sectionID = section.id;
+      var order = Sortable.serialize(sectionID);
+      alerttext += sectionID + ': ' + Sortable.sequence(section) + '\n';
+    });
+    alert(alerttext);
+    return false;
+  }
+</script>
+
+  </body>
+</html>
+
