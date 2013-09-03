@@ -8,7 +8,7 @@
 */
 
 // dont change this until you'd read the perl file
-var wootjsver = "3.0";
+var wootjsver = "3.1";
 
 // main AJAX loop
 function displayWOOT(URI) {
