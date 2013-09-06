@@ -1,7 +1,7 @@
 woot
 ====
 
-woot checker code
+woot checker code for http://woot.kishk.org
 
 getwoot3.pl - Add to cron, pulls unified xml feed from woot servers and makes a non-namespace xml for JS.  Also has email functionality for notifications
 
